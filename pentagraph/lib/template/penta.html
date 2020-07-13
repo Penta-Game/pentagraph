@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Board Render</title>
+
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='materialize/css/materialize.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='custom.css') }}"
+    />
+  </head>
+  <body>
+    <div class="offset">
+      <div class="full">
+        <div id="board-container" class="container w-100 h-100"></div>
+      </div>
+    </div>
+  </body>
+
+  <!-- JS -->
+  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='svg.min.js') }}"></script>
+  <script
+    type="module"
+    src="{{ url_for('static', filename='core.js') }}"
+  ></script>
+  <script src="{{ url_for('static', filename='materialize/js/materialize.min.js') }}"></script>
+
+  <script type="module">
+    import { PentaMath } from "{{ url_for('static', filename='penta-math.js') }}";
+
+    $(document).ready(() => {
+      const math = new PentaMath();
+      const size = 1000;
+      let drawer = SVG().addTo("#board-container");
+      $(drawer.node).empty();
+      drawer.addClass("allow-overflow");
+      drawer.viewbox(0, 0, size, size);
+      drawer.attr({
+        preserveAspectRatio: "xMidYMid meet",
+        id: "board-container-svg",
+      });
+      drawer.data({ size: size });
+      let board = math.draw(drawer, size);
+
+      $('circle[data-id="bg"]').click((evt) => {
+        console.log(evt.target);
+      });
+      $("circle[data-id]").click((evt) => {
+        console.log(`You have clicked the element ${$(evt.target).data("id")}`);
+      });
+      $("#change-size").click((evt) => {
+        $("#size-input").val(SVG("#board-container-svg").data("size"));
+        $("#sizeModal").modal({ focus: true });
+      });
+
+      $("#sizeModal-close").click((evt) => {
+        $("#size-input").val();
+      });
+
+      $.get("{{ url_for('static', filename='dump.json') }}", (data) => {
+        console.log(data);
+      });
+    });
+  </script>
+</html>

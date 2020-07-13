@@ -1,0 +1,10 @@
+.full {
+  width: 100% !important;
+  height: 100% !important;
+}
+.allow-overflow {
+  overflow: visible !important;
+}
+.offset {
+  margin-top: 3em !important;
+}
