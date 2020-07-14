@@ -8,8 +8,7 @@ from heapq import heappop, heappush
 from itertools import count
 
 from networkx import bidirectional_dijkstra, Graph
-from networkx.relabel import relabel_nodes
-from networkx.readwrite.json_graph import node_link_data, node_link_graph
+from networkx.readwrite.json_graph import node_link_data
 from networkx.utils import make_str, to_tuple
 from .figures import Figure
 
@@ -82,7 +81,8 @@ class Board(Graph):
         if figure == []:
             [
                 self.figures_table.__setitem__(figure[1], (figure[0], figure[2]))
-                for figure in self.figures if figure[0] != "-"
+                for figure in self.figures
+                if figure[0] != "-"
             ]
         else:
             self.figures_table.__setitem__(figure[1], (figure[0], figure[2]))
@@ -171,8 +171,16 @@ class Board(Graph):
                             revpath.reverse()
                             finalpath = paths[0][w] + revpath[1:]
 
-    def find_path(self, start: typing.List[int], end: typing.List[int]) -> bool:
-        """Finds path from start to end field"""
+    def find_path(self, start: str, end: str) -> set:
+        """Finds path from start to end (ignoring figures)
+
+        Args:
+            start (str): start node
+            end (str): end node
+
+        Returns:
+            Path with steps (set): (steps, [start, …, end])
+        """
         return bidirectional_dijkstra(self, start, end)
 
     def add_figure(self, figure: typing.List[list]):
@@ -212,16 +220,19 @@ class Board(Graph):
         print(f"Loaded figures: {json['figures']}")
         graph.update()
         data = json["graph"]
-        graph.graph = data.get('graph', {})
+        graph.graph = data.get("graph", {})
         c = count()
-        for d in data['nodes']:
+        for d in data["nodes"]:
             node = to_tuple(d.get("id", next(c)))
             nodedata = dict((make_str(k), v) for k, v in d.items() if k != "id")
             graph.add_node(node, **nodedata)
         for d in data["links"]:
             src = tuple(d["source"]) if isinstance(d["source"], list) else d["source"]
             tgt = tuple(d["target"]) if isinstance(d["target"], list) else d["target"]
-            edgedata = dict((make_str(k), v) for k, v in d.items()
-                            if k != "source" and k != "target")
+            edgedata = dict(
+                (make_str(k), v)
+                for k, v in d.items()
+                if k != "source" and k != "target"
+            )
             graph.add_edge(src, tgt, **edgedata)
         return graph
