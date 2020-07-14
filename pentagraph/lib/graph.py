@@ -7,71 +7,62 @@ import typing
 from heapq import heappop, heappush
 from itertools import count
 
-from networkx import bidirectional_dijkstra, empty_graph
+from networkx import bidirectional_dijkstra, Graph
 from networkx.relabel import relabel_nodes
 from networkx.readwrite.json_graph import node_link_data, node_link_graph
+from networkx.utils import make_str, to_tuple
 from .figures import Figure
 
 
-class Board:
+class Board(Graph):
     """Class representing a pentagame board"""
 
     board = None
-    COLORS = (
-        ()
-    )
-    EDGES = (
-        ("0", "1", 3),
-        ("0", "4", 3),
-        ("0", "5", 6),
-        ("0", "6", 6),
-        ("1", "2", 3),
-        ("1", "6", 6),
-        ("1", "7", 6),
-        ("2", "3", 3),
-        ("2", "8", 6),
-        ("2", "7", 6),
-        ("3", "4", 3),
-        ("3", "8", 6),
-        ("3", "9", 6),
-        ("4", "5", 6),
-        ("4", "9", 6),
-        ("5", "9", 3),
-        ("5", "6", 3),
-        ("6", "7", 3),
-        ("7", "8", 3),
-        ("8", "9", 3),
+    COLORS = ()
+    EDGEMAP = (
+        ("0-0-0", "1-0-0", 3),
+        ("0-0-0", "4-0-0", 3),
+        ("0-0-0", "5-0-0", 6),
+        ("0-0-0", "6-0-0", 6),
+        ("1-0-0", "2-0-0", 3),
+        ("1-0-0", "6-0-0", 6),
+        ("1-0-0", "7-0-0", 6),
+        ("2-0-0", "3-0-0", 3),
+        ("2-0-0", "8-0-0", 6),
+        ("2-0-0", "7-0-0", 6),
+        ("3-0-0", "4-0-0", 3),
+        ("3-0-0", "8-0-0", 6),
+        ("3-0-0", "9-0-0", 6),
+        ("4-0-0", "5-0-0", 6),
+        ("4-0-0", "9-0-0", 6),
+        ("5-0-0", "9-0-0", 3),
+        ("5-0-0", "6-0-0", 3),
+        ("6-0-0", "7-0-0", 3),
+        ("7-0-0", "8-0-0", 3),
+        ("8-0-0", "9-0-0", 3),
     )
 
-    def __init__(self, figures: typing.List[list] = [], generate=True):
+    def __init__(self, figures: typing.List[list] = [], generate: bool = False):
         """Represents a game board as graph"""
+        super().__init__()
         self.figures = figures
         if generate:
-            self.board = self.gen_simple()
+            self.gen_simple()
 
     def produce_figures(self) -> typing.List[Figure]:
         """Returns internal figures to list of Figure class"""
-        return [
-            Figure() for figure in self.figures
-        ]
+        return [Figure() for figure in self.figures]
 
     def gen_simple(self):
         """Generate complete graph"""
-        graph = empty_graph()
-        for edge in self.EDGES:
+        for edge in self.EDGEMAP:
             for stop in range(1, edge[2]):
-                graph.add_edge(
-                    f"{edge[0]}-{stop}-{edge[1]}", f"{edge[0]}-{stop + 1}-{edge[1]}"
+                self.add_edge(
+                    f"{edge[0][0]}-{stop}-{edge[1][0]}",
+                    f"{edge[0][0]}-{stop + 1}-{edge[1][0]}",
                 )
-            graph.add_edge(f"{edge[0]}-{edge[2]}-{edge[1]}", edge[1])
-            graph.add_edge(f"{edge[0]}-1-{edge[1]}", edge[0])
-
-        def relable(label: int) -> str:
-            return f"{label}-0-0"
-
-        mapping = dict()
-        [mapping.__setitem__(str(i), relable(i)) for i in range(10)]
-        return relabel_nodes(graph, mapping)  # Fix "0" -> "0-0-0"
+            self.add_edge(f"{edge[0][0]}-{edge[2]}-{edge[1][0]}", edge[1])
+            self.add_edge(f"{edge[0][0]}-1-{edge[1][0]}", edge[0])
 
     def gen_start_field(self, players: typing.List[int], update: bool = True) -> None:
         """Generates figures for start field"""
@@ -90,14 +81,13 @@ class Board:
         self.figures_table = dict()
         if figure == []:
             [
-                self.figures_table.__setitem__(
-                    figure[1], (figure[0], figure[2]))
-                for figure in self.figures
+                self.figures_table.__setitem__(figure[1], (figure[0], figure[2]))
+                for figure in self.figures if figure[0] != "-"
             ]
         else:
             self.figures_table.__setitem__(figure[1], (figure[0], figure[2]))
 
-    def verify_path(self, source: typing.AnyStr, target: typing.AnyStr) -> typing.Set:
+    def verify_path(self, source: str, target: str) -> typing.Set:
         """
         Verifies path while respecting figures 
         Based on https://networkx.github.io/documentation/stable/_modules/networkx/algorithms/shortest_paths/weighted.html#bidirectional_dijkstra
@@ -121,7 +111,7 @@ class Board:
         push(fringe[1], (0, next(c), target))
 
         # neighs for extracting correct neighbor information
-        neighs = [self.board.neighbors, self.board.neighbors]
+        neighs = [self.neighbors, self.neighbors]
 
         # figures
         table = self.figures_table
@@ -154,9 +144,9 @@ class Board:
 
             for w in neighs[_dir](v):
                 if _dir == 0:  # forward
-                    pos = self.board[v][w]
+                    pos = self[v][w]
                 else:  # back, must remember to change v,w->w,v
-                    pos = self.board[w][v]
+                    pos = self[w][v]
                 if (w in table or v in table) and pos not in [target, source]:
                     minweight = pos.get(weight, 100)
                 else:
@@ -165,8 +155,7 @@ class Board:
 
                 if w in distances[_dir]:
                     if vwLength < distances[_dir][w]:
-                        raise ValueError(
-                            "Contradictory paths found: negative weights?")
+                        raise ValueError("Contradictory paths found: negative weights?")
                 elif w not in seen[_dir] or vwLength < seen[_dir][w]:
                     # relaxing
                     seen[_dir][w] = vwLength
@@ -182,25 +171,57 @@ class Board:
                             revpath.reverse()
                             finalpath = paths[0][w] + revpath[1:]
 
-    def finds_path(self, start: typing.List[int], end: typing.List[int]) -> bool:
+    def find_path(self, start: typing.List[int], end: typing.List[int]) -> bool:
         """Finds path from start to end field"""
-        return bidirectional_dijkstra(self.board, start, end)
+        return bidirectional_dijkstra(self, start, end)
 
     def add_figure(self, figure: typing.List[list]):
         """Adds figure to board"""
         self.figures.append(figure)
         self.update(figure)
 
+    def move(self, move: list, validate: bool = True) -> None:
+        """Update field with move (moves are not yet checked on structure)
+
+        Args:
+            move (list): Move as described in https://github.com/Penta-Game/denomination
+            validate (bool) [True]: Validate move 
+        """
+        if move[0]:
+            pass
+        return
+
     def jsonify(self) -> typing.Dict[str, list]:
         """Saves board as dict (json)"""
         if self.board is None:
             self.board = self.gen_simple()
-        return dict(edges=node_link_data(self.board), figures=self.figures_table)
+        return dict(graph=node_link_data(self), figures=self.figures)
 
     @staticmethod
     def load(json: dict):
-        """Loads board from json (from Board.jsonify)"""
-        instance = Board(generate=False)
-        instance.board = node_link_graph(json["edges"])
-        instance.figures = json["figures"]
-        return instance
+        """Loads graph from json (Board.jsonify())
+
+        Args:
+            json (dict): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        graph = Board(generate=False)
+        graph.figures = json["figures"]
+        print(f"Loaded figures: {json['figures']}")
+        graph.update()
+        data = json["graph"]
+        graph.graph = data.get('graph', {})
+        c = count()
+        for d in data['nodes']:
+            node = to_tuple(d.get("id", next(c)))
+            nodedata = dict((make_str(k), v) for k, v in d.items() if k != "id")
+            graph.add_node(node, **nodedata)
+        for d in data["links"]:
+            src = tuple(d["source"]) if isinstance(d["source"], list) else d["source"]
+            tgt = tuple(d["target"]) if isinstance(d["target"], list) else d["target"]
+            edgedata = dict((make_str(k), v) for k, v in d.items()
+                            if k != "source" and k != "target")
+            graph.add_edge(src, tgt, **edgedata)
+        return graph

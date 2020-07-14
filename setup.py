@@ -10,7 +10,7 @@ with open("requirements.txt", "r") as fh:
 
 setuptools.setup(
     name="pentagraph", # Replace with your own username
-    version="0.0.1b1",
+    version="0.0.1b2",
     author="Cobalt",
     author_email="chaosthe0rie@pm.me",
     description="Graph representation and tools for programming with pentagame",
