@@ -26,11 +26,13 @@ The source code of pentagraph is distributed according to the [MIT License by Co
 
 Libraries as listed in `requirements.txt` please consider their respective Licenses before e.g. making commercial use of `pentagraph`.
 
+The same applies for [materialize](https://materializecss.com/) and [svg.js](https://svgjs.com/docs/3.0).
+
 ## Development Notes
 
 ### `pentagraph.lib.graphic`
 
-An easy-to-use way of displaying the `Board` taking advantage of Flask in combination with [materialize css](https://materializecss.com/), [svg.js](https://svgjs.com/docs/3.0). The final board svg is created with a variation of resources from [boardgame](https://github.com/Penta-Game/boardgame).
+An easy-to-use way of displaying the `Board` taking advantage of Flask in combination with [materialize](https://materializecss.com/), [svg.js](https://svgjs.com/docs/3.0). The final board svg is created with a variation of resources from [boardgame](https://github.com/Penta-Game/boardgame).
 
 ### `pentagraph.lib.figures`
 
