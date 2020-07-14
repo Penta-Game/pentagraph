@@ -10,7 +10,7 @@ from itertools import count
 from networkx import bidirectional_dijkstra, empty_graph
 from networkx.relabel import relabel_nodes
 from networkx.readwrite.json_graph import node_link_data, node_link_graph
-from pentagraph.lib.figures import Figure
+from .figures import Figure
 
 
 class Board:

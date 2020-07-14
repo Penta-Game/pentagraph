@@ -1,10 +1,10 @@
 import typing
-from pentagraph.lib.graph import Board
+from .graph import Board
 
 
 def render(board: Board, fullscreen: bool = True, base: int = 300) -> None:
     """Starts local flask server with render template"""
-    from flask import Flask, render_template
+    from flask import Flask, render_template, request, jsonify, abort
     from ujson import dump
     from os import path
 
@@ -16,5 +16,12 @@ def render(board: Board, fullscreen: bool = True, base: int = 300) -> None:
     @app.route("/")
     def render_route():
         return render_template("penta.html")
+
+    @app.route("/update")
+    def update_graph():
+        if "move" not in request.values:
+            return abort(401)
+        board.move(request.values())
+        return jsonify(board.jsonify())
 
     return app.run(debug=True)
