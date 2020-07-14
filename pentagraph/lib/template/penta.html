@@ -26,7 +26,6 @@
   </body>
 
   <!-- JS -->
-  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='svg.min.js') }}"></script>
   <script
     type="module"
@@ -36,39 +35,29 @@
 
   <script type="module">
     import { PentaMath } from "{{ url_for('static', filename='penta-math.js') }}";
+    import { getJSONP } from "{{ url_for('static', filename='core.js') }}";
 
-    $(document).ready(() => {
+    document.addEventListener("DOMContentLoaded", function(){
       const math = new PentaMath();
       const size = 1000;
       let drawer = SVG().addTo("#board-container");
-      $(drawer.node).empty();
       drawer.addClass("allow-overflow");
       drawer.viewbox(0, 0, size, size);
       drawer.attr({
         preserveAspectRatio: "xMidYMid meet",
         id: "board-container-svg",
       });
+  
       drawer.data({ size: size });
       let board = math.draw(drawer, size);
 
-      $('circle[data-id="bg"]').click((evt) => {
-        console.log(evt.target);
-      });
-      $("circle[data-id]").click((evt) => {
-        console.log(`You have clicked the element ${$(evt.target).data("id")}`);
-      });
-      $("#change-size").click((evt) => {
-        $("#size-input").val(SVG("#board-container-svg").data("size"));
-        $("#sizeModal").modal({ focus: true });
-      });
-
-      $("#sizeModal-close").click((evt) => {
-        $("#size-input").val();
-      });
-
-      $.get("{{ url_for('static', filename='dump.json') }}", (data) => {
+      Array.prototype.slice.call(document.querySelectorAll('[data-id]')).map(function(element) {
+        element.onclick = (evt) => {
+          console.log(`You have clicked the element ${this.dataset.id}`);
+      }});
+      getJSONP("{{ url_for('static', filename='dump.json') }}", function(data){
         console.log(data);
-      });
-    });
+      });       
+    })
   </script>
 </html>

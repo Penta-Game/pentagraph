@@ -10,6 +10,7 @@ class PentaMath {
 
     To learn more about pentagame visit https://pentagame.org
     */
+
   // holds the numerical constants
   _constants = {
     l: 6, // legs
@@ -50,10 +51,8 @@ class PentaMath {
       if (id.substr(1, 4) === "-0-0") {
         return this.board.junctions[id[0].parseInt() + 1];
       } else {
-        
       }
     } else if (id.charAt(0) >= 9) {
-
     }
     return point;
   }

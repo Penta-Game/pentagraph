@@ -15,6 +15,23 @@ function checkTypes(args, types) {
   }
 }
 
+function getJSONP(url, success) {
+
+  var ud = '_' + +new Date,
+      script = document.createElement('script'),
+      head = document.getElementsByTagName('head')[0] 
+             || document.documentElement;
+
+  window[ud] = function(data) {
+      head.removeChild(script);
+      success && success(data);
+  };
+
+  script.src = url.replace('callback=?', 'callback=' + ud);
+  head.appendChild(script);
+
+}
+
 const destructureID = (id) => {
   if (typeOf(id) === "number") {
     return id;
@@ -156,4 +173,4 @@ class Field extends Point {
   }
 }
 
-export { Point, Figure, Stop, Field };
+export { Point, Figure, Stop, Field, getJSONP };
