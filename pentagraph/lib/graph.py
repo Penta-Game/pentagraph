@@ -76,16 +76,20 @@ class Board(Graph):
 
         self.update()
 
-    def update(self, figure: list = []) -> None:
+    def update(self, figures: typing.List[list] = []) -> None:
         self.figures_table = dict()
-        if figure == []:
+        if figures == []:
             [
                 self.figures_table.__setitem__(figure[1], (figure[0], figure[2]))
                 for figure in self.figures
                 if figure[0] != "-"
             ]
         else:
-            self.figures_table.__setitem__(figure[1], (figure[0], figure[2]))
+            [
+                self.figures_table.__setitem__(figure[1], (figure[0], figure[2]))
+                for figure in figures
+                if figure[0] != "-"
+            ]
 
     def verify_path(self, source: str, target: str) -> typing.Set:
         """
@@ -183,10 +187,27 @@ class Board(Graph):
         """
         return bidirectional_dijkstra(self, start, end)
 
-    def add_figure(self, figure: typing.List[list]):
-        """Adds figure to board"""
+    def add_figure(self, figure: typing.List[list], update: bool = True):
+        """Adds figure to board
+
+        Args:
+            figure (typing.List[list]): [description]
+            update (bool): Invoke Board.update([figure]) (Recommended) 
+        """
         self.figures.append(figure)
-        self.update(figure)
+        if update:
+            self.update([figure])
+
+    def add_figures(self, figures: typing.List[list], update: bool = True):
+        """Add figures to board (invokes Board.add_figure)
+
+        Args:
+            figures (typing.List[list]): Figures
+            update (bool): Invoke Board.update([figures]) (Recommended) 
+        """
+        [self.add_figure(figure, update=False) for figure in figures]
+        if update:
+            self.update(figures)
 
     def move(self, move: list, validate: bool = True) -> None:
         """Update field with move (moves are not yet checked on structure)
