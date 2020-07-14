@@ -42,9 +42,9 @@ Collection of Objects used for figure representation. These Objects also specifi
 
 Graph representation as `Board` Object.
 
-### `pentagraph.lib.constants`
+### `pentagraph.lib.math`
 
-Constants used for board graphics. May be used to construct a pentagame board in 2D space.
+Math usable for graphic representation of pentagame board. Python version of math used in `pentagraph.lib.graphic`.
 
 ### `pentagraph.ml`
 
