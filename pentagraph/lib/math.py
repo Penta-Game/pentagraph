@@ -23,7 +23,7 @@ class Math:
         self.d = 2 * (self.c + 12 + self.j) + (2 * self.j + 6)
         self.r = (2 / 5) * sqrt(1570 + (698 * sqrt(5)))
         self.R = self.r + self.c
-        self.linewidth ) 0.1 / self.R
+        self.linewidth = 0.1 / self.R
         self.inner_r = ((self.k + self.j) * 2 * (1 + sqrt(5))) / sqrt(2 * (5 + sqrt(5)))
         return
 

@@ -1,11 +1,10 @@
 import typing
-from pentagraph.lib.constants import CONSTANTS
 
 
 class Figure:
     type = None
 
-    def __init__(self, position: int,  uid: int):
+    def __init__(self, position: int, uid: int):
         """Class representing a figure
 
         Args:
@@ -37,4 +36,3 @@ class BlackStopper(Figure):
     type = "black stopper"
     color = (0, 0, 0)
 
- 
