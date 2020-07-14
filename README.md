@@ -1,8 +1,8 @@
-[![Python Version](https://img.shields.io/badge/python-3.8.2-blue?style=for-the-badge&logo=python)](https://www.python.org/downloads/release/python-382/) [![Code Style](https://img.shields.io/badge/Style-black-%23000000?style=for-the-badge)](https://black.readthedocs.io/) [![Networkx Version](https://img.shields.io/badge/NetworkX-2.4-orange?style=for-the-badge)](https://networkx.github.io/)
+[![Python Version](https://img.shields.io/badge/python-3.8.2-blue?style=for-the-badge&logo=python)](https://www.python.org/downloads/release/python-382/) [![Code Style](https://img.shields.io/badge/Style-black-%23000000?style=for-the-badge)](https://black.readthedocs.io/) [![Networkx Version](https://img.shields.io/badge/NetworkX-2.4-orange?style=for-the-badge)](https://networkx.github.io/) [![Version](https://img.shields.io/badge/Version-Beta-red?style=for-the-badge)](https://pypi.org/project/pentagraph/)
 
 # pentagraph
 
-Graph representation and tools for programming with pentagame
+Graph representation and tools for programming with pentagame. *This is in active development an will be fully functional with the 0.0.1 release*
 
 ## Setup
 
