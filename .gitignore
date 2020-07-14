@@ -133,3 +133,6 @@ settings.json
 
 # Tmp file support
 tmp*
+
+# VSCode support
+*.code-workspace
