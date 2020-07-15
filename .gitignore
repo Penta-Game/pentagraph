@@ -136,3 +136,6 @@ tmp*
 
 # VSCode support
 *.code-workspace
+
+# Ignore dump from pentagraph.lib.graphic.render
+dump.json
