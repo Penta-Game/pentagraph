@@ -30,7 +30,7 @@ jobs:
         pip install -r requirements.txt
     - name: Check black formatting
       run: |
-        python -m black . --target py38
+        python -m black . --target-version py38
     - name: Test with pytest
       run: |
         python -m pytest test/
