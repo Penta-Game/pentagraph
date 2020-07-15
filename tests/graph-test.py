@@ -12,6 +12,3 @@ def test_serialization():
     assert H.figures == G.figures
     assert H.figures_table == G.figures_table
     assert H.edges == G.edges
-
-
-def test_
