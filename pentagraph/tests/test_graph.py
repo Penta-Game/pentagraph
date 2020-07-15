@@ -1,4 +1,4 @@
-from pentagraph.lib.graph import Board
+from ..lib.graph import Board
 
 
 def test_serialization():
