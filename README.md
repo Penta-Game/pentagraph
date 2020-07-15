@@ -58,4 +58,4 @@ Reserved space for machine learning with pentagame graphs. Will in the future re
 
 ### Docs
 
-Coming soon
+Coming soon :cat:
