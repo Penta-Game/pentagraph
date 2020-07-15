@@ -38,8 +38,13 @@ class PentaMath {
     this.constants = this._constants;
   }
 
-  helper(centerX, centerY, radius, angle) {
-    angle = (angle * Math.PI) / 180;
+  helper(centerX, centerY, radius, angle, options) {
+    if (options !== undefined && "shift" in options && options.shift === true) {
+      angle = (angle * Math.PI) / 180 + (Math.PI / 180.0) * -18;
+    } else {
+      angle = (angle * Math.PI) / 180;
+    }
+
     return {
       x: centerX + radius * Math.cos(angle),
       y: centerY + radius * Math.sin(angle),
@@ -61,12 +66,18 @@ class PentaMath {
     // evaluate args
     if (args === undefined || args.colors === undefined) {
       var colors = {
-        fields: ["blue", "red", "green", "yellow", "white"],
+        fields: ["blue", "white", "green", "yellow", "red"],
         background: "#28292b",
         foreground: "#d3d3d3",
       };
     } else {
       var colors = args.colors;
+    }
+
+    if (args !== undefined && args.shift !== undefined) {
+      this.shift = {shift: true};
+    } else {
+      this.shift = {shift: false};
     }
 
     // setup board
@@ -83,11 +94,12 @@ class PentaMath {
     drawer.attr({ preserveAspectRatio: "xMidYMid meet" });
 
     // evaluate basic points and values
-    const lineWidth = (0.1 / this.constants.sizes.R) * scale;
     const center = { x: 0.5 * scale, y: 0.5 * scale };
+    scale = scale * 0.8; // prevent overflow
+    const lineWidth = (0.1 / this.constants.sizes.R) * scale;
     const InnerRadius =
       (scale / this.constants.sizes.R) * this.constants.sizes.inner_r;
-    const OuterRadius = scale / this.constants.sizes.c;
+    const OuterRadius = scale / this.constants.sizes.c + lineWidth * 3.5;
     const JunctionRadius =
       (scale / this.constants.sizes.R) * this.constants.sizes.j;
     const CornerRadius =
@@ -96,25 +108,23 @@ class PentaMath {
       (scale / this.constants.sizes.R) * this.constants.sizes.s;
 
     // bg circle
-    const BGCircle = drawer.circle(scale);
+    const BGCircle = drawer.circle(scale + lineWidth * 5);
     BGCircle.attr({
-      cx: 0.5 * scale,
-      cy: 0.5 * scale,
+      cx: center.x,
+      cy: center.y,
       fill: colors.background,
       id: "background-circle",
     });
-    console.log(BGCircle);
 
     // draw outer circle
     const OuterBGCircle = drawer.circle(OuterRadius * 2);
     OuterBGCircle.attr({
-      cx: 0.5 * scale,
-      cy: 0.5 * scale,
+      cx: center.x,
+      cy: center.y,
       fill: "none",
       stroke: colors.foreground,
       "stroke-width": lineWidth,
     });
-    console.log(OuterBGCircle);
     OuterBGCircle.data({ id: "outer-circle" });
 
     // drawing corners and junctions
@@ -124,14 +134,16 @@ class PentaMath {
         center.x,
         center.y,
         OuterRadius,
-        CornerAngle
+        CornerAngle,
+        this.shift
       );
       let JunctionAngle = CornerAngle + 180;
       let JunctionPoints = this.helper(
         center.x,
         center.y,
         InnerRadius,
-        JunctionAngle
+        JunctionAngle,
+        this.shift
       );
 
       // draw stops before Junctions to prevent overlapping
@@ -141,7 +153,8 @@ class PentaMath {
           center.x,
           center.y,
           OuterRadius,
-          StopAngle
+          StopAngle,
+          this.shift
         );
         let OuterStop = drawer.circle(StopRadius);
         OuterStop.attr({
@@ -162,7 +175,8 @@ class PentaMath {
           JunctionPoints.x,
           JunctionPoints.y,
           StopRadius * x + JunctionRadius / 4,
-          ArmAngle
+          ArmAngle,
+          this.shift
         );
         let ArmStop = drawer.circle(StopRadius);
         ArmStop.attr({
@@ -191,8 +205,9 @@ class PentaMath {
           let LegPoints = this.helper(
             CornerPoints.x,
             CornerPoints.y,
-            StopRadius * x + CornerRadius / 4,
-            LegAngles[index]
+            StopRadius * x + CornerRadius / 4 + lineWidth * 1.5,
+            LegAngles[index],
+            this.shift
           );
           Leg.attr({
             fill: colors.foreground,
@@ -246,7 +261,6 @@ class PentaMath {
       });
     }
 
-    console.log(board);
     this.board = board;
     return {
       board: board,

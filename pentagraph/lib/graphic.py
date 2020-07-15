@@ -17,6 +17,11 @@ def render(board: Board, fullscreen: bool = True, base: int = 300) -> None:
     def render_route():
         return render_template("penta.html")
 
+    @app.route("/reset")
+    def reset_board():
+        board = Board(generate=True)
+        return render_route()
+
     @app.route("/update")
     def update_graph():
         if "move" not in request.values:

@@ -15,21 +15,41 @@ function checkTypes(args, types) {
   }
 }
 
-function getJSONP(url, success) {
+let getJSONP = (obj) => {
+  return new Promise((resolve, reject) => {
+    let xhr = new XMLHttpRequest();
+    xhr.open(obj.method || "GET", obj.url);
+    if (obj.headers) {
+      Object.keys(obj.headers).forEach((key) => {
+        xhr.setRequestHeader(key, obj.headers[key]);
+      });
+    }
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(JSON.parse(xhr.response));
+      } else {
+        reject(xhr.statusText);
+      }
+    };
+    xhr.onerror = () => reject(xhr.statusText);
+    xhr.send(obj.body);
+  });
+};
 
-  var ud = '_' + +new Date,
-      script = document.createElement('script'),
-      head = document.getElementsByTagName('head')[0] 
-             || document.documentElement;
+function download(filename, text) {
+  var element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", filename);
 
-  window[ud] = function(data) {
-      head.removeChild(script);
-      success && success(data);
-  };
+  element.style.display = "none";
+  document.body.appendChild(element);
 
-  script.src = url.replace('callback=?', 'callback=' + ud);
-  head.appendChild(script);
+  element.click();
 
+  document.body.removeChild(element);
 }
 
 const destructureID = (id) => {
@@ -173,4 +193,4 @@ class Field extends Point {
   }
 }
 
-export { Point, Figure, Stop, Field, getJSONP };
+export { Point, Figure, Stop, Field, getJSONP, download };

@@ -16,10 +16,10 @@ class Board(Graph):
 
     COLORS = (
         ((0, 0, 255), "#0000FF", "blue"),
-        ((255, 0, 0), "#FF0000", "red"),
+        ((255, 255, 255), "#FFFFFF", "white"),
         ((0, 128, 0), "#0800", "green"),
         ((255, 255, 0), "#FFFF00", "yellow"),
-        ((255, 255, 255), "#FFFFFF", "white"),
+        ((255, 0, 0), "#FF0000", "red"),
     )  # Websafe colors
     EDGEMAP = (
         ("0-0-0", "1-0-0", 3),
