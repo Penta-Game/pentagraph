@@ -6,18 +6,22 @@ __doc__ = "Pentagame board as operational networkx graph"
 import typing
 from heapq import heappop, heappush
 from itertools import count
-
 from networkx import bidirectional_dijkstra, Graph
 from networkx.readwrite.json_graph import node_link_data
 from networkx.utils import make_str, to_tuple
-from .figures import Figure
+from .figures import Figure, Player, GrayStopper, BlackStopper
 
 
 class Board(Graph):
-    """Class representing a pentagame board"""
 
     board = None
-    COLORS = ()
+    COLORS = (
+        ((0, 0, 255), "#0000FF", "blue"),
+        ((255, 0, 0), "#FF0000", "red"),
+        ((0, 128, 0), "#0800", "green"),
+        ((255, 255, 0), "#FFFF00", "yellow"),
+        ((255, 255, 255), "#FFFFFF", "white"),
+    )  # Websafe colors
     EDGEMAP = (
         ("0-0-0", "1-0-0", 3),
         ("0-0-0", "4-0-0", 3),
@@ -41,19 +45,22 @@ class Board(Graph):
         ("8-0-0", "9-0-0", 3),
     )
 
-    def __init__(self, figures: typing.List[list] = [], generate: bool = False):
-        """Represents a game board as graph"""
+    def __init__(
+        self, figures: typing.List[typing.List[int]] = [], generate: bool = False
+    ):
+        """Graph representing a pentagame board
+
+        Args:
+            figures (typing.List[list[int]], optional): Figures as List[int]. Defaults to [].
+            generate (bool, optional): Generate nodes and edges from Board.EDGEMAP. Defaults to False.
+        """
         super().__init__()
         self.figures = figures
         if generate:
             self.gen_simple()
 
-    def produce_figures(self) -> typing.List[Figure]:
-        """Returns internal figures to list of Figure class"""
-        return [Figure() for figure in self.figures]
-
     def gen_simple(self):
-        """Generate complete graph"""
+        """Generate nodes and edges from Board.EDGEMAP. May be invoked by Board.__init__"""
         for edge in self.EDGEMAP:
             for stop in range(1, edge[2]):
                 self.add_edge(
@@ -63,38 +70,54 @@ class Board(Graph):
             self.add_edge(f"{edge[0][0]}-{edge[2]}-{edge[1][0]}", edge[1])
             self.add_edge(f"{edge[0][0]}-1-{edge[1][0]}", edge[0])
 
-    def gen_start_field(self, players: typing.List[int], update: bool = True) -> None:
-        """Generates figures for start field"""
+    def gen_start_field(
+        self, players: typing.Set[int] = [], update: bool = True, empty: bool = True
+    ) -> None:
+        """Generate Start Field
+
+        Args:
+            players (typing.Set[int]): Player uids. Get placed in order of supplied set.
+            update (bool, optional): invoke Board.update for figure_table generation(Recommended). Defaults to True.
+            empty (bool, optional): empty Board.figures before adding new figures. Defaults to True.
+        """
+        if empty:
+            self.figures = []
+
         for i in range(5):
-            self.figures.append([i + 6, "-1", -1, 1])
-            self.figures.append([i + 11, f"{i}-0-0", -1, 2])
+            self.figures.append(GrayStopper(-1, i + 6))
+            self.figures.append(BlackStopper([i, 0, 0], i + 11))
 
         [
-            [self.figures.append([i, f"{i + 5}-0-0", id, 0]) for i in range(5)]
-            for id in players
+            self.figures.append(Player([i + 5, 0, 0], players[i], self.COLORS[i][0]))
+            for i in range(len(players))
         ]
 
-        self.update()
+        if update:
+            self.update()
 
     def update(self, figures: typing.List[list] = []) -> None:
         self.figures_table = dict()
         if figures == []:
             [
-                self.figures_table.__setitem__(figure[1], (figure[0], figure[2]))
+                self.figures_table.__setitem__(
+                    figure.position[1], (figure.position[0], figure.position[2])
+                )
                 for figure in self.figures
-                if figure[0] != "-"
+                if figure.position != -1
             ]
         else:
             [
-                self.figures_table.__setitem__(figure[1], (figure[0], figure[2]))
+                self.figures_table.__setitem__(
+                    figure.position[1], (figure.position[0], figure.position[2])
+                )
                 for figure in figures
-                if figure[0] != "-"
+                if figure.position != -1
             ]
 
     def verify_path(self, source: str, target: str) -> typing.Set:
         """
         Verifies path while respecting figures 
-        Based on https://networkx.github.io/documentation/stable/_modules/networkx/algorithms/shortest_paths/weighted.html#bidirectional_dijkstra
+        Based on https://github.com/networkx/networkx/blob/master/networkx/algorithms/shortest_paths/weighted.py#L1948
         """
 
         if source == target:
@@ -121,7 +144,7 @@ class Board(Graph):
         table = self.figures_table
         table.pop(source, None)
         table.pop(target, None)
-        table.pop("-1", None)
+        table.pop("-1", None)  # ensure only figures on board are counted
 
         # variables to hold shortest discovered path
         finaldist = 1e30000
@@ -238,7 +261,6 @@ class Board(Graph):
         """
         graph = Board(generate=False)
         graph.figures = json["figures"]
-        print(f"Loaded figures: {json['figures']}")
         graph.update()
         data = json["graph"]
         graph.graph = data.get("graph", {})

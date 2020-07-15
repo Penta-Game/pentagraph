@@ -6,12 +6,11 @@ with open("README.md", "r") as fh:
 
 with open("requirements.txt", "r") as fh:
     dependencies = fh.read().splitlines()
-    print(dependencies)
 
 setuptools.setup(
-    name="pentagraph", # Replace with your own username
-    version="0.0.1b3",
-    author="Cobalt",
+    name="pentagraph",
+    version=pentagraph.__version__,
+    author=pentagraph.__author__,
     author_email="chaosthe0rie@pm.me",
     description="Graph representation and tools for programming with pentagame",
     long_description=long_description,
@@ -24,5 +23,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=dependencies,
-    python_requires='>=3.8',
+    python_requires=">=3.8",
 )
