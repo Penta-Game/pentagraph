@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from pentagraph.lib.graph import Board
 
-
 try:
     import pygraphviz
     from networkx.drawing.nx_agraph import graphviz_layout

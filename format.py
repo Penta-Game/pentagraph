@@ -12,9 +12,7 @@ if __name__ == "__main__":
                 continue
             with open(file_path, "r") as f:
                 try:
-                    out = format_file_contents(
-                        f.read(), fast=False, mode=FileMode()
-                        )
+                    out = format_file_contents(f.read(), fast=False, mode=FileMode())
                     changes[0] += 1
                     with open(file_path, "w") as f:
                         f.write(out)
@@ -22,4 +20,4 @@ if __name__ == "__main__":
                 except NothingChanged:
                     changes[1] += 1
 
-    print(f"{changes[0]} changed/ {changes[1]} not changed")    
+    print(f"{changes[0]} changed/ {changes[1]} not changed")
