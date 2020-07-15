@@ -20,9 +20,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Black Code Formatting
+      uses: lgeiger/black-action@v1.0.1
       with:
         Lint: -t py38 .
-      uses: lgeiger/black-action@v1.0.1
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
