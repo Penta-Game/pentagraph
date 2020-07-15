@@ -58,4 +58,4 @@ Reserved space for machine learning with pentagame graphs. Will in the future re
 
 ### Docs
 
-Docs are generated using [pelican](https://docs.getpelican.com/en/stable/). [materialize](https://materializecss.com/) is actively used.
+Coming soon
