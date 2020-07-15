@@ -26,4 +26,3 @@ class Math:
         self.linewidth = 0.1 / self.R
         self.inner_r = ((self.k + self.j) * 2 * (1 + sqrt(5))) / sqrt(2 * (5 + sqrt(5)))
         return
-

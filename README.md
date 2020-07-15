@@ -30,6 +30,12 @@ The same applies for [materialize](https://materializecss.com/) and [svg.js](htt
 
 ## Development Notes
 
+### Contributing and CI
+
+There are 2 github actions workflows. The [`Python Packge`](https://github.com/Penta-Game/pentagraph/actions?query=workflow%3A%22Python+package%22) workflow is called on each push & merged pull request. This workflow runs test against the new version (`pytest tests/`) and checks if files in `pentagraph/` could be formatted with black. If either files could be formatted, the tests fail or the requirements are broken, the run fails. For black errors `format.py` can recursively execute black against all files in `pentagraph/` (you need to install black before using this).
+
+The other workflow releases a new pip package on each github release. This release oriented workflow takes advantage of twine and github repository specific secrets. When this workflow crashes with authentication related errors contact [Cobalt](https://cobalt.rocks).
+
 ### `pentagraph.lib.graphic`
 
 An easy-to-use way of displaying the `Board` taking advantage of Flask in combination with [materialize](https://materializecss.com/), [svg.js](https://svgjs.com/docs/3.0). The final board svg is created with a variation of resources from [boardgame](https://github.com/Penta-Game/boardgame).

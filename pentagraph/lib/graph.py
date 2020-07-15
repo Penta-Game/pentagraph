@@ -247,7 +247,10 @@ class Board(Graph):
         Returns:
             typing.Dict[str, list]: data (nodes, edges, figures)
         """
-        return dict(graph=node_link_data(self), figures=[figure.jsonify() for figure in self.figures])
+        return dict(
+            graph=node_link_data(self),
+            figures=[figure.jsonify() for figure in self.figures],
+        )
 
     @staticmethod
     def load(json: dict):

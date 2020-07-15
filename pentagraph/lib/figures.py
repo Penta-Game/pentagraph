@@ -61,7 +61,9 @@ class Figure:
         Returns:
             dict: relevant attributes of figure
         """
-        return dict(type=self.type, position=self.position, uid=self.uid, color=self.color)
+        return dict(
+            type=self.type, position=self.position, uid=self.uid, color=self.color
+        )
 
     def __repr__(self) -> str:
         return f"<Figure {self.uid}>"
@@ -87,7 +89,9 @@ class GrayStopper(Figure):
 class Player(Figure):
     type = "player"
 
-    def __init__(self, position: typing.Set[int], uid: int, color: typing.List[float], **attrs):
+    def __init__(
+        self, position: typing.Set[int], uid: int, color: typing.List[float], **attrs
+    ):
         """Player Figure
 
         Args:
