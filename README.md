@@ -2,7 +2,7 @@
 
 # pentagraph
 
-Graph representation and tools for programming with pentagame. *This is in active development an will be fully functional with the 0.0.1 release*
+Graph representation and tools for programming with pentagame. _This is in active development an will be fully functional with the 0.0.1 release_
 
 ## Setup
 
@@ -49,3 +49,7 @@ Math usable for graphic representation of pentagame board. Python version of mat
 ### `pentagraph.ml`
 
 Reserved space for machine learning with pentagame graphs. Will in the future require tensorflow, gym and other libraries.
+
+### Docs
+
+Docs are generated using [pelican](https://docs.getpelican.com/en/stable/). [materialize](https://materializecss.com/) is actively used.

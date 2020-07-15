@@ -15,8 +15,9 @@ def clamp(source: typing.Set[int]) -> typing.List[int]:
 
 class Figure:
     type = None
+    color = None
 
-    def __init__(self, position: typing.Set[int], uid: int):
+    def __init__(self, position: typing.Set[int], uid: int, **attrs):
         """Class representing a figure
 
         Args:
@@ -25,6 +26,7 @@ class Figure:
         """
         self.position = position
         self.uid = uid
+        self.attrs = attrs
 
     def move(self, target: typing.List[int]) -> None:
         """Moves figure from current position to start"""
@@ -53,13 +55,21 @@ class Figure:
                 f"Position {self.position} isn't convertible, invalid format?"
             )
 
+    def jsonify(self) -> dict:
+        """Produce dict containing relevant attributes
+
+        Returns:
+            dict: relevant attributes of figure
+        """
+        return dict(type=self.type, position=self.position, uid=self.uid, color=self.color)
+
     def __repr__(self) -> str:
         return f"<Figure {self.uid}>"
 
     def __eq__(self, value) -> bool:
         if isinstance(value, Figure) is False:
             raise TypeError("Figures can only compare to figures")
-        return (self.uid == value.uid and self.position == value.position)
+        return self.uid == value.uid and self.position == value.position
 
 
 class BlackStopper(Figure):
@@ -77,7 +87,7 @@ class GrayStopper(Figure):
 class Player(Figure):
     type = "player"
 
-    def __init__(self, position: typing.Set[int], uid: int, color: typing.List[float]):
+    def __init__(self, position: typing.Set[int], uid: int, color: typing.List[float], **attrs):
         """Player Figure
 
         Args:
@@ -85,7 +95,13 @@ class Player(Figure):
             uid (int): uid of player
             color (typing.set[int]): rgb color as set (r, g, b)
         """
-        super().__init__(position, uid)
+        super().__init__(position, uid, **attrs)
         self.color = clamp(color)
         self.hexcolor = f"#{self.color[0]:02x}{self.color[1]:02x}{self.color[2]:02x}"
 
+
+TYPES = {
+    Player.type: Player,
+    GrayStopper.type: GrayStopper,
+    BlackStopper.type: BlackStopper,
+}

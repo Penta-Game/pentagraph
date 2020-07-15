@@ -19,10 +19,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Black Code Formatting
-      uses: lgeiger/black-action@v1.0.1
-      with:
-        Lint: -t py38 .
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -30,8 +26,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install pytest
-        python -m pip install -r requirements.txt
+        pip install pytest black
+        pip install -r requirements.txt
+    - name: Check black formatting
+      run: |
+        python -m black . --target py38
     - name: Test with pytest
       run: |
-        python -m pytest
+        python -m pytest test/

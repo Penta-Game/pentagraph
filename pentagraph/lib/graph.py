@@ -9,12 +9,11 @@ from itertools import count
 from networkx import bidirectional_dijkstra, Graph
 from networkx.readwrite.json_graph import node_link_data
 from networkx.utils import make_str, to_tuple
-from .figures import Figure, Player, GrayStopper, BlackStopper
+from .figures import Figure, Player, GrayStopper, BlackStopper, TYPES
 
 
 class Board(Graph):
 
-    board = None
     COLORS = (
         ((0, 0, 255), "#0000FF", "blue"),
         ((255, 0, 0), "#FF0000", "red"),
@@ -55,6 +54,7 @@ class Board(Graph):
             generate (bool, optional): Generate nodes and edges from Board.EDGEMAP. Defaults to False.
         """
         super().__init__()
+        self.name = self.__repr__()
         self.figures = figures
         if generate:
             self.gen_simple()
@@ -239,15 +239,15 @@ class Board(Graph):
             move (list): Move as described in https://github.com/Penta-Game/denomination
             validate (bool) [True]: Validate move 
         """
-        if move[0]:
-            pass
-        return
+        print("This function is not yet implemented")
 
     def jsonify(self) -> typing.Dict[str, list]:
-        """Saves board as dict (json)"""
-        if self.board is None:
-            self.board = self.gen_simple()
-        return dict(graph=node_link_data(self), figures=self.figures)
+        """Saves graph data as dict (suitable for Board.load)
+
+        Returns:
+            typing.Dict[str, list]: data (nodes, edges, figures)
+        """
+        return dict(graph=node_link_data(self), figures=[figure.jsonify() for figure in self.figures])
 
     @staticmethod
     def load(json: dict):
@@ -260,7 +260,7 @@ class Board(Graph):
             [type]: [description]
         """
         graph = Board(generate=False)
-        graph.figures = json["figures"]
+        graph.figures = [TYPES[entry["type"]](**entry) for entry in json["figures"]]
         graph.update()
         data = json["graph"]
         graph.graph = data.get("graph", {})
