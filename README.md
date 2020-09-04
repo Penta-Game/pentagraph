@@ -36,6 +36,8 @@ There are 2 github actions workflows. The [`Python Packge`](https://github.com/P
 
 The other workflow releases a new pip package on each github release. This release oriented workflow takes advantage of twine and github repository specific secrets. When this workflow crashes with authentication related errors contact [Cobalt](https://cobalt.rocks).
 
+Dependency managing is handled by [poetry](https://python-poetry.org/docs/). Poetry is also used fo the packaging runs though you should update `requirements.txt` at least before creating a release with `poetry export -f requirements.txt > requirements.txt`.
+
 ### `pentagraph.lib.graphic`
 
 An easy-to-use way of displaying the `Board` taking advantage of Flask in combination with [materialize](https://materializecss.com/), [svg.js](https://svgjs.com/docs/3.0). The final board svg is created with a variation of resources from [boardgame](https://github.com/Penta-Game/boardgame).
