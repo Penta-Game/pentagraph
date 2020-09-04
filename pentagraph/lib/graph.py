@@ -4,7 +4,6 @@
 __doc__ = "Pentagame board as operational networkx graph"
 
 import typing
-from abc import abstractmethod, ABCMeta
 from heapq import heappop, heappush
 from itertools import count
 from networkx import bidirectional_dijkstra, Graph  # type: ignore
@@ -13,7 +12,7 @@ from networkx.utils import make_str, to_tuple  # type: ignore
 from .figures import Figure, Player, GrayStopper, BlackStopper, FigureType, TYPES
 
 
-class Board(Graph, metaclass=ABCMeta):
+class Board(Graph):
     COLORS: typing.Tuple[typing.Tuple[typing.Tuple[int, int, int], str, str], ...] = (
         ((0, 0, 255), "#0000FF", "blue"),
         ((255, 255, 255), "#FFFFFF", "white"),
@@ -48,9 +47,10 @@ class Board(Graph, metaclass=ABCMeta):
         ("8-0-0", "9-0-0", 3),
     )
 
-    @abstractmethod
     def __init__(
-        self, figures: typing.List[FigureType] = [], generate: bool = False,
+        self,
+        figures: typing.List[FigureType] = [],
+        generate: bool = False,
     ):
         """Graph representing a pentagame board
 
