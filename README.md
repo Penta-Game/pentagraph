@@ -52,10 +52,8 @@ Graph representation as `Board` Object.
 
 Math usable for graphic representation of pentagame board. Python version of math used in `pentagraph.lib.graphic`.
 
-### `pentagraph.ml`
-
-Reserved space for machine learning with pentagame graphs. Will in the future require tensorflow, gym and other libraries.
-
 ### Docs
 
 Coming soon :cat:
+
+The docs will be produced with pelican and github pages.

@@ -7,7 +7,6 @@ def test_serialization():
     data = G.jsonify()
 
     H = Board.load(data)
-    print(dir(G))
     assert H.nodes == G.nodes
     assert H.figures == G.figures
     assert H.figures_table == G.figures_table

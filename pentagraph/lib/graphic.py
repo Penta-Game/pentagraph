@@ -1,32 +1,40 @@
 import typing
-from .graph import Board
+from .graph import RawBoard
 
 
-def render(board: Board, fullscreen: bool = True, base: int = 300) -> None:
+def render(rawboard: RawBoard, fullscreen: bool = True, base: int = 300) -> None:
     """Starts local flask server with render template"""
     from flask import Flask, render_template, request, jsonify, abort
-    from ujson import dump
     from os import path
 
     app = Flask(__name__, template_folder="template", static_folder="static")
-
-    with open(f"{path.dirname(path.realpath(__file__))}/static/dump.json", "w+") as F:
-        dump(board.jsonify(), F)
 
     @app.route("/")
     def render_route():
         return render_template("penta.html")
 
+    @app.route("/data")
+    def data_board():
+        return jsonify(rawboard.jsonify(hexcolors=True))
+
     @app.route("/reset")
     def reset_board():
-        board = Board(generate=True)
+        board = RawBoard(generate=True)
         return render_route()
 
     @app.route("/update")
     def update_graph():
         if "move" not in request.values:
             return abort(401)
-        board.move(request.values())
-        return jsonify(board.jsonify())
+        rawboard.move(request.values())
+        return jsonify(rawboard.jsonify())
+
+    @app.route("/add-figures")
+    def add_figures_route():
+        figures = request.values.get("figures", None)
+        if figures is None:
+            return abort(401)
+        rawboard.add_figures(figures)
+        return jsonify(rawboard.jsonify(hexcolors=True))
 
     return app.run(debug=True)
