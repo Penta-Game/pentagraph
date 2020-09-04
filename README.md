@@ -1,4 +1,4 @@
-[![Python Version](https://img.shields.io/badge/python-3.8.2-blue?style=for-the-badge&logo=python)](https://www.python.org/downloads/release/python-382/) [![Code Style](https://img.shields.io/badge/Style-black-%23000000?style=for-the-badge)](https://black.readthedocs.io/) [![Version](https://img.shields.io/badge/Version-Beta-red?style=for-the-badge)](https://pypi.org/project/pentagraph/) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Penta-Game/pentagraph/Python%20package?style=for-the-badge)
+[![Python Version](https://img.shields.io/badge/python-3.8.2-blue?style=for-the-badge&logo=python)](https://www.python.org/downloads/release/python-382/) [![Code Style](https://img.shields.io/badge/Code%20Style-black-%23000000?style=for-the-badge)](https://black.readthedocs.io/) [![Version](https://img.shields.io/badge/Version-Beta-red?style=for-the-badge)](https://pypi.org/project/pentagraph/) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Penta-Game/pentagraph/Python%20package?style=for-the-badge)
 
 # pentagraph
 
