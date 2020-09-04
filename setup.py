@@ -4,8 +4,6 @@ import pentagraph
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-with open("requirements.txt", "r") as fh:
-    dependencies = fh.read().splitlines()
 
 setuptools.setup(
     name="pentagraph",
@@ -22,6 +20,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=dependencies,
     python_requires=">=3.8",
 )
