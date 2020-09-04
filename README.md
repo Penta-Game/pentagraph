@@ -16,15 +16,15 @@ You will need a working instance of [pip](https://www.makeuseof.com/tag/install-
 
 Clone from github (requires [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)): `git clone https://github.com/Penta-Game/pentagraph`
 
-To install the basic dependencies you can use `pip`: `python3 -m pip install -r requirements.txt`
+To install the dependencies you can use [`poetry`](https://python-poetry.org/docs/#installation): `poetry install`
 
-I highly recommend using a [virtualenv](https://docs.python.org/3/library/venv.html) for developing purposes.
+All files are required to have full typing support and need to pass [mypy](http://mypy-lang.org/) (This is checked in the `Python package` workflow on push/ pull request).
 
 ## License
 
 The source code of pentagraph is distributed according to the [MIT License by Cobalt](https://github.com/Penta-Game/pentagraph/blob/master/LICENSE)
 
-Libraries as listed in `requirements.txt` please consider their respective Licenses before e.g. making commercial use of `pentagraph`.
+Libraries as listed in `pyproject.toml` please consider their respective Licenses before e.g. making commercial use of `pentagraph`.
 
 The same applies for [materialize](https://materializecss.com/) and [svg.js](https://svgjs.com/docs/3.0).
 
