@@ -6,4 +6,4 @@ lang: en
 Authors: Cobalt
 Summary: Documentation
 
-Coming Soon!
+Coming soon!

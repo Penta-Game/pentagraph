@@ -13,7 +13,6 @@ TIMEZONE = "Europe/Paris"
 
 DEFAULT_LANG = "en"
 THEME = "theme"
-PREFIX = "/pentagraph/"
 
 # Navigation bar links
 
@@ -22,6 +21,8 @@ NAVLINKS = [
     ("About", "/pages/about-us"),
     ("Getting Started", "/pages/getting-started"),
 ]
+
+PREFIX = ""
 
 
 # Plugins
