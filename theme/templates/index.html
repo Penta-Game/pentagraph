@@ -1,0 +1,142 @@
+{% extends "base.html" -%} {% block content -%}
+
+<div class="mw-100 bg-light">
+  <div class="container py-5">
+    <!-- Jumbotron -->
+    <section id="intro" class="text-center">
+      <h1 class="mb-3 h1">{{ SITENAME }}</h1>
+      <p class="mb-3">
+        Graph representation and tools for programming with pentagame.
+      </p>
+      <div class="btn-group">
+        <a
+          class="btn btn-dark"
+          href="https://github.com/Penta-Game/pentagraph"
+          role="button"
+        >
+          <i class="fab fa-github"></i> Visit us on github
+        </a>
+        <a
+          class="btn btn-dark"
+          href="/pages/docs-overview"
+          role="button"
+        >
+          <i class="fas fa-book"></i> Docs
+        </a>
+      </div>
+    </section>
+    <!-- #Jumbotron -->
+
+    <!-- Plans -->
+    <section id="next-release">
+      <h1 class="mx-3 h2">Next Release: 0.0.1</h1>
+      <!-- Progress - WIP
+      <div class="progress">
+        <div
+          class="progress-bar text-lighten-1"
+          role="progressbar"
+          style="width: 30%"
+          aria-valuenow="30"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+        </div>
+      </div>
+    -->
+      <div>
+        <!-- Tabs navs -->
+        <ul
+          class="nav mt-2 nav-tabs nav-fill mb-3"
+          id="progress-1"
+          role="tablist"
+        >
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link active"
+              id="progress-1-1"
+              data-toggle="tab"
+              href="#progress-1-tabs-1"
+              role="tab"
+              aria-controls="progress-1-tabs-1"
+              aria-selected="true"
+            >
+              Done
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              id="progress-1-2"
+              data-toggle="tab"
+              href="#progress-1-tabs-2"
+              role="tab"
+              aria-controls="progress-1-tabs-2"
+              aria-selected="false"
+            >
+              WIP
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              id="progress-1-3"
+              data-toggle="tab"
+              href="#progress-1-tabs-3"
+              role="tab"
+              aria-controls="progress-1-tabs-3"
+              aria-selected="false"
+            >
+              Planned
+            </a>
+          </li>
+        </ul>
+        <!-- Tabs navs -->
+
+        <!-- Tabs content -->
+        <div class="tab-content" id="ex2-content">
+          <div
+            class="tab-pane fade show active"
+            id="progress-1-tabs-1"
+            role="tabpanel"
+            aria-labelledby="progress-1-1"
+          >
+            <ul>
+              <li>Board as Graph Model</li>
+              <li>Path finding</li>
+              <li>Figures and Player Models</li>
+              <li>Board render</li>
+            </ul>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="progress-1-tabs-2"
+            role="tabpanel"
+            aria-labelledby="progress-1-2"
+          >
+            <ul>
+              <li>Player position evaluation</li>
+              <li>Simple Bots</li>
+              <li>Full mypy support</li>
+            </ul>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="progress-1-tabs-3"
+            role="tabpanel"
+            aria-labelledby="progress-1-3"
+          >
+            <ul>
+              <li>Intractable Demo</li>
+              <li>Tests</li>
+              <li>Enhanced Pipeline</li>
+              <li>Support for python 3.7</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Tabs content -->
+      </div>
+    </section>
+    <!-- #Plans -->
+  </div>
+</div>
+{% endblock content -%}
