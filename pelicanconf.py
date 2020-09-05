@@ -13,6 +13,7 @@ TIMEZONE = "Europe/Paris"
 
 DEFAULT_LANG = "en"
 THEME = "theme"
+PREFIX = "/pentagraph/"
 
 # Navigation bar links
 

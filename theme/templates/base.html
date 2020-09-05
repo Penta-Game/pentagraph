@@ -7,13 +7,13 @@
 
     <!-- CSS -->
     <link
-      href="/theme/mdb-ui-free/css/mdb.min.css"
+      href="{{ PREFIX }}/theme/mdb-ui-free/css/mdb.min.css"
       type="text/css"
       rel="stylesheet"
     />
-    <link href="/theme/fontawesome-free-5.14.0-web/css/all.min.css" type="text/css" rel="stylesheet" />
-    <link href="/theme/css/style.min.css" type="text/css" rel="stylesheet" />
-    <link href="/theme/css/pygments.min.css" type="text/css" rel="stylesheet" />
+    <link href="{{ PREFIX }}/theme/fontawesome-free-5.14.0-web/css/all.min.css" type="text/css" rel="stylesheet" />
+    <link href="{{ PREFIX }}/theme/css/style.min.css" type="text/css" rel="stylesheet" />
+    <link href="{{ PREFIX }}/theme/css/pygments.min.css" type="text/css" rel="stylesheet" />
 
     <!-- Favicon -->
   </head>
@@ -36,7 +36,7 @@
           <ul class="navbar-nav">
             {% for link, href in NAVLINKS -%}
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="{{ href }}"
+              <a class="nav-link" aria-current="page" href="{{ PREFIX }}{{ href }}"
                 >{{ link }}</a
               >
             </li>
@@ -50,6 +50,6 @@
     </div>
 
     <!-- JS -->
-    <script src="/theme/mdb-ui-free/js/mdb.min.js"></script>
+    <script src="{{ PREFIX }}/theme/mdb-ui-free/js/mdb.min.js"></script>
   </body>
 </html>
