@@ -41,4 +41,4 @@ jobs:
           TWINE_REPOSITORY_URL: https://pypi.org/project/pentagraph/
         run: |
           $HOME/.poetry/bin/poetry run python setup.py sdist bdist_wheel
-          $HOME/.poetry/bin/poetry run twine upload -repository pypi dist/*
+          $HOME/.poetry/bin/poetry run twine upload dist/*
