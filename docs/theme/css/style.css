@@ -1,5 +1,7 @@
 :root {
   --dark: #262626;
+  --link: hsla(0, 0%, 100%, 0.55);
+  --link-item: hsla(0, 0%, 100%, 0.75);
 }
 
 .base-container {
@@ -76,4 +78,12 @@ code {
 
 div.elegant-color > .card-header {
   border-bottom: none !important;
+}
+
+a {
+  color: var(--link);
+}
+
+a:hover {
+  color: var(--link-item);
 }

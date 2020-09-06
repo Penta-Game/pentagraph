@@ -11,12 +11,24 @@
       type="text/css"
       rel="stylesheet"
     />
-    <link href="{{ PREFIX }}/theme/fontawesome-free-5.14.0-web/css/all.min.css" type="text/css" rel="stylesheet" />
-    <link href="{{ PREFIX }}/theme/css/style.min.css" type="text/css" rel="stylesheet" />
-    <link href="{{ PREFIX }}/theme/css/pygment.min.css" type="text/css" rel="stylesheet" />
+    <link
+      href="{{ PREFIX }}/theme/fontawesome-free-5.14.0-web/css/all.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ PREFIX }}/theme/css/style.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ PREFIX }}/theme/css/pygment.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ PREFIX }}/theme/favicon.ico">
+    <link rel="shortcut icon" href="{{ PREFIX }}/theme/favicon.ico" />
 
     <!-- Meta -->
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -27,12 +39,19 @@
     <meta property="og:type" content="text/html" />
     <meta name="description" content="{{ DESCRIPTION|clean }}" />
     <meta property="og:description" content="{{ DESCRIPTION|clean }}" />
-
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{{ PREFIX }}/">Pentagraph</a>
+        <a class="navbar-brand" href="{{ PREFIX }}/">
+          <img
+            src="{{ PREFIX }}/theme/brand.png"
+            height="30"
+            alt="Pentagraph brand"
+            loading="lazy"
+          />
+          Pentagraph
+        </a>
         <button
           class="navbar-toggler"
           type="button"
@@ -48,7 +67,10 @@
           <ul class="navbar-nav">
             {% for link, href in NAVLINKS -%}
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="{{ PREFIX }}{{ href }}"
+              <a
+                class="nav-link"
+                aria-current="page"
+                href="{{ PREFIX }}{{ href }}"
                 >{{ link }}</a
               >
             </li>
@@ -60,6 +82,30 @@
     <div class="base-container mw-100">
       {% block content -%} {% endblock content -%}
     </div>
+
+    <!-- Footer -->
+    <footer
+      id="footer"
+      class="page-footer mt-3 font-small bg-dark text-white w-100"
+    >
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">
+        © 2018-2020 Copyright
+        <a
+          href="https://raw.githubusercontent.com/Penta-Game/pentagraph/gh-pages/LICENSE"
+          class="copyright"
+        >
+          MIT License
+        </a>
+        @
+        <a href="https://cobalt.rocks/pages/contact/" class="copyright">
+          Cobalt
+        </a>
+        <span id="footer-advanced"></span>
+      </div>
+      <!-- #Copyright -->
+    </footer>
+    <!-- #Footer -->
 
     <!-- JS -->
     <script src="{{ PREFIX }}/theme/mdb-ui-free/js/mdb.min.js"></script>
