@@ -27,7 +27,7 @@ PREFIX = ""
 
 # Plugins
 PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["uglify"]
+PLUGINS = ["uglify", "filters"]
 UGLIFY_EXCLUDE = [".+fontawesome.*$"]
 
 # Uncomment following line if you want document-relative URLs when developing
