@@ -1,0 +1,14 @@
+{% set DESCRIPTION = article.summary -%} {% extends "base.html" %} {% block content
+%}
+<div class="mw-100">
+  <div class="container py-5">
+    <!-- Jumbotron -->
+    <section id="content">
+      <div class="text-center">
+        <h1 class="mb-0 text-center h1 h1-page">{{ article.title }}</h1>
+      </div>
+      <p>{{ article.content }}</p>
+    </section>
+  </div>
+</div>
+{% endblock %}

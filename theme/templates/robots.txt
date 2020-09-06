@@ -1,0 +1,5 @@
+User-agent: *
+{% for prefix in PREFIXES -%}
+Allow: {{ PREFIX }}/{{ prefix }}
+{% endfor -%}
+Disallow: /static

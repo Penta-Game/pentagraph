@@ -80,10 +80,14 @@ div.elegant-color > .card-header {
   border-bottom: none !important;
 }
 
-a {
+a.copyright {
   color: var(--link);
 }
 
-a:hover {
+a.copyright:hover {
   color: var(--link-item);
+}
+
+.bg-none {
+  background: none;
 }

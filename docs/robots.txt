@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /pentagraph/pages
+Disallow: /static
