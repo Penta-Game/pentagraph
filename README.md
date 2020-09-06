@@ -56,6 +56,4 @@ Math usable for graphic representation of pentagame board. Python version of mat
 
 ### Docs
 
-Coming soon :cat:
-
-The docs will be produced with pelican and github pages.
+The raw outline of the docs (WIP) is available on [github pages](https://penta-game.github.io/pentagraph/) and is managed in [/gh-pages](https://github.com/Penta-Game/pentagraph/tree/gh-pages).
