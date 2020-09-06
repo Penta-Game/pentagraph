@@ -38,6 +38,7 @@ jobs:
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          TWINE_REPOSITORY_URL: https://pypi.org/project/pentagraph/
         run: |
           $HOME/.poetry/bin/poetry run python setup.py sdist bdist_wheel
           $HOME/.poetry/bin/poetry run twine upload -repository pypi dist/*
