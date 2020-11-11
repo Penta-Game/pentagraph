@@ -2,7 +2,7 @@
 
 # pentagraph
 
-Graph representation and tools for programming with pentagame. _This is in active development an will be fully functional with the 0.0.1 release_
+Graph representation and tools for programming with pentagame. _This is in active development an will be fully functional with the 0.0.1 release_ The development is on hiatus at the moment, becuase there's an active attempt at creating similiar rust implementation that will be faster an more complete. 
 
 ## Setup
 
